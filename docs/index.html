@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Video Stabilization (DL) — Tarun G. Vadaparthi</title>
+<meta name="description" content="Deep Learning-based camera motion smoothing using RAFT + sequence models">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#fbfbfd;--ink:#161a22;--sub:#5d6a7e;--line:#e8ecf3;--pill:#eef2ff;--max:880px}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.7}
+  .wrap{max-width:var(--max);margin:0 auto;padding:36px 20px}
+  h1{font-family:"Source Serif 4",Georgia,serif;font-weight:600;margin:.2rem 0}
+  .by{color:var(--sub);margin:.4rem 0 1rem}
+  .row{display:flex;gap:10px;flex-wrap:wrap;margin:.8rem 0 1.2rem}
+  .pill{padding:8px 12px;border-radius:999px;background:var(--pill);border:1px solid var(--line);text-decoration:none;color:var(--ink);font-weight:600}
+  hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+  figure{margin:18px 0}
+  figcaption{color:var(--sub);font-size:.9rem;margin-top:8px}
+  img,video{max-width:100%;height:auto;border:1px solid var(--line);border-radius:12px}
+  pre{white-space:pre-wrap;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <header>
+    <h1>Deep Learning–Based Video Stabilization</h1>
+    <div class="by">Tarun Gangadhar Vadaparthi</div>
+    <div class="row">
+      <a class="pill" href="files/VideoStabilization.pdf" target="_blank">📄 Report (PDF)</a>
+      <a class="pill" href="https://github.com/tarungangadhar/VideoStabilization" target="_blank">💻 Code</a>
+    </div>
+  </header>
+
+  <!-- Demo -->
+  <section>
+    <hr>
+    <h3>Demo</h3>
+    <video autoplay loop muted playsinline>
+      <source src="assets/dlpro.mov" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <figcaption>Side-by-side comparison: raw vs smoothed camera motion using learned sequences.</figcaption>
+  </section>
+
+  <!-- Abstract -->
+  <section>
+    <hr>
+    <h3>Abstract</h3>
+    <p>
+      We estimate dense optical flow with RAFT and collapse it to mean (dx, dy) per frame pair.
+      A BiLSTM (with Transformer/GRU baselines) is trained to predict smoothed motion sequences
+      supervised by a local moving-average target, reducing jitter and improving visual stability.
+    </p>
+  </section>
+
+  <!-- Method (optional image) -->
+  <section>
+    <hr>
+    <h3>Method Overview</h3>
+    <figure>
+      <img src="assets/method.png" alt="Pipeline: RAFT → mean flow → sequence model → smoothed motion">
+      <figcaption>Pipeline: RAFT flow → mean (dx, dy) → masked MSE training on moving-average targets.</figcaption>
+    </figure>
+  </section>
+
+  <!-- Results -->
+  <section>
+    <hr>
+    <h3>Results</h3>
+    <figure>
+      <img src="assets/losscurve.png" alt="Training loss curve">
+      <figcaption>Training loss (example).</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/traj.png" alt="2D camera trajectory (raw vs smoothed)">
+      <figcaption>2D camera trajectory: raw vs smoothed.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/dxdylstm.png" alt="dx/dy time series (BiLSTM)">
+      <figcaption>Per-axis motion (dx/dy): raw vs target vs BiLSTM.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/modelcompare.png" alt="Model comparison">
+      <figcaption>Model comparison: BiLSTM vs Transformer vs GRU.</figcaption>
+    </figure>
+  </section>
+
+ 
+
+</main>
+</body>
+</html>
